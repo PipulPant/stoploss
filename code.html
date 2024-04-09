@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stop Loss Calculator</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    #result {
+      display: none;
+    }
+    #result.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4">Stop Loss Calculator</h1>
+    <form id="stopLossForm">
+      <div class="form-group">
+        <label for="quantity">Quantity of Shares:</label>
+        <input type="number" class="form-control" id="quantity" placeholder="Enter quantity" required>
+      </div>
+      <div class="form-group">
+        <label for="price">Price per Share:</label>
+        <input type="number" class="form-control" id="price" placeholder="Enter price" required>
+      </div>
+      <div class="form-group">
+        <label for="percentage">Stop Loss Percentage (%):</label>
+        <input type="number" class="form-control" id="percentage" placeholder="Enter percentage" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Calculate Stop Loss</button>
+    </form>
+    <div id="result" class="mt-4">
+      <h3>Stop Loss Price:</h3>
+      <p id="stopLossPrice"></p>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('#stopLossForm').submit(function(e) {
+        e.preventDefault();
+        const quantity = parseFloat($('#quantity').val());
+        const price = parseFloat($('#price').val());
+        const percentage = parseFloat($('#percentage').val());
+
+        // Input Validation (optional)
+        if (isNaN(quantity) || isNaN(price) || isNaN(percentage)) {
+          alert("Please enter valid numbers!");
+          return;
+        }
+
+        const stopLossPrice = price - (price * (percentage / 100));
+        $('#stopLossPrice').text(stopLossPrice.toFixed(2));
+        $('#result').addClass('show'); // Use Bootstrap class for showing result
+      });
+    });
+  </script>
+</body>
+</html>
